@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Search, Users, Briefcase } from 'lucide-react';
+import { Search, Users, Briefcase, Plus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { formatCurrency } from '@/lib/utils';
 import { useClients } from '@/hooks/useClients';
 import { Skeleton } from '@/components/ui/skeleton';
 import { format, parseISO } from 'date-fns';
+import { AddClientDialog } from '@/components/AddClientDialog';
 
 export default function Clients() {
   const { clients, loading } = useClients();
   const [search, setSearch] = useState('');
+  const [isAddOpen, setIsAddOpen] = useState(false);
 
   const filteredClients = clients
     .filter(c => 
@@ -24,11 +26,15 @@ export default function Clients() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between mb-6 flex-shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 flex-shrink-0 gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Clients</h1>
           <p className="text-muted-foreground text-sm">Manage your active client base and their details.</p>
         </div>
+        <Button onClick={() => setIsAddOpen(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Client
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -80,6 +86,7 @@ export default function Clients() {
                   <div className="flex flex-col items-center justify-center">
                     <Users className="w-8 h-8 text-muted-foreground opacity-50 mb-4" />
                     <p>No clients found.</p>
+                    <Button variant="link" onClick={() => setIsAddOpen(true)}>Add your first client</Button>
                   </div>
                 </td>
               </tr>
@@ -111,6 +118,8 @@ export default function Clients() {
           </tbody>
         </table>
       </div>
+      
+      <AddClientDialog open={isAddOpen} onOpenChange={setIsAddOpen} />
     </div>
   );
 }

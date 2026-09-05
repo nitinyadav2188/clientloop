@@ -11,6 +11,8 @@ export interface User {
   name: string;
   avatar?: string;
   plan: Plan;
+  industry?: string;
+  currency?: string;
 }
 
 export interface Notification {

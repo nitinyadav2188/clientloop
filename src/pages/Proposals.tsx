@@ -8,10 +8,12 @@ import { formatCurrency } from '@/lib/utils';
 import { useProposals } from '@/hooks/useProposals';
 import { Skeleton } from '@/components/ui/skeleton';
 import { format, parseISO } from 'date-fns';
+import { AddProposalDialog } from '@/components/AddProposalDialog';
 
 export default function Proposals() {
   const { proposals, loading } = useProposals();
   const [search, setSearch] = useState('');
+  const [isAddOpen, setIsAddOpen] = useState(false);
 
   const filteredProposals = proposals
     .filter(p => 
@@ -28,28 +30,32 @@ export default function Proposals() {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex items-center justify-between mb-6 flex-shrink-0">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 flex-shrink-0 gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Proposals</h1>
           <p className="text-muted-foreground text-sm">Create and track your client proposals.</p>
         </div>
+        <Button onClick={() => setIsAddOpen(true)}>
+          <Plus className="w-4 h-4 mr-2" />
+          Create Proposal
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Drafts</div>
+        <Card className="p-4 bg-card border border-border">
+          <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Drafts</div>
           <div className="text-2xl font-bold">{loading ? <Skeleton className="h-8 w-12" /> : drafts}</div>
         </Card>
-        <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Sent</div>
+        <Card className="p-4 bg-card border border-border">
+          <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Sent</div>
           <div className="text-2xl font-bold">{loading ? <Skeleton className="h-8 w-12" /> : sent}</div>
         </Card>
-        <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Accepted</div>
-          <div className="text-2xl font-bold text-accent-lime drop-shadow-sm">{loading ? <Skeleton className="h-8 w-12" /> : accepted}</div>
+        <Card className="p-4 bg-accent-lime/10 border border-accent-lime">
+          <div className="text-[10px] text-primary uppercase tracking-widest font-black mb-1">Accepted</div>
+          <div className="text-2xl font-bold text-accent">{loading ? <Skeleton className="h-8 w-12" /> : accepted}</div>
         </Card>
-        <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Total Value (Sent)</div>
+        <Card className="p-4 bg-card border border-border">
+          <div className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Total Value (Sent)</div>
           <div className="text-2xl font-bold">{loading ? <Skeleton className="h-8 w-32" /> : formatCurrency(totalSentValue)}</div>
         </Card>
       </div>
@@ -71,6 +77,7 @@ export default function Proposals() {
           <thead className="text-xs text-muted-foreground uppercase bg-secondary/50">
             <tr>
               <th className="px-4 py-3 font-medium">Project</th>
+              <th className="px-4 py-3 font-medium">Client</th>
               <th className="px-4 py-3 font-medium">Amount</th>
               <th className="px-4 py-3 font-medium">Date</th>
               <th className="px-4 py-3 font-medium">Status</th>
@@ -83,13 +90,18 @@ export default function Proposals() {
                   <td className="px-4 py-3"><Skeleton className="h-5 w-32" /></td>
                   <td className="px-4 py-3"><Skeleton className="h-5 w-24" /></td>
                   <td className="px-4 py-3"><Skeleton className="h-5 w-24" /></td>
+                  <td className="px-4 py-3"><Skeleton className="h-5 w-24" /></td>
                   <td className="px-4 py-3"><Skeleton className="h-6 w-20 rounded-full" /></td>
                 </tr>
               ))
             ) : filteredProposals.length === 0 ? (
                <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
-                  No proposals found.
+                <td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">
+                  <div className="flex flex-col items-center justify-center">
+                    <FileText className="w-8 h-8 text-muted-foreground opacity-50 mb-4" />
+                    <p>No proposals found.</p>
+                    <Button variant="link" onClick={() => setIsAddOpen(true)}>Create your first proposal</Button>
+                  </div>
                 </td>
               </tr>
             ) : (
@@ -99,6 +111,7 @@ export default function Proposals() {
                     <FileText className="w-4 h-4 text-muted-foreground" />
                     {prop.project}
                   </td>
+                  <td className="px-4 py-3">{prop.client}</td>
                   <td className="px-4 py-3 font-medium">{formatCurrency(prop.amount)}</td>
                   <td className="px-4 py-3 text-muted-foreground">{format(parseISO(prop.created_at), 'MMM d, yyyy')}</td>
                   <td className="px-4 py-3">
@@ -110,6 +123,8 @@ export default function Proposals() {
           </tbody>
         </table>
       </div>
+      
+      <AddProposalDialog open={isAddOpen} onOpenChange={setIsAddOpen} />
     </div>
   );
 }

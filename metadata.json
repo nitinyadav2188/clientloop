@@ -1,0 +1,6 @@
+{
+  "name": "ClientLoop",
+  "description": "SaaS CRM for freelancers to turn conversations into clients.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

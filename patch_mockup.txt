@@ -1,0 +1,105 @@
+            {/* Mock Body */}
+            <div className="flex h-[calc(100%-3rem)] bg-[#FDFDFD]">
+              {/* Sidebar */}
+              <div className="w-56 border-r border-border bg-white p-6 hidden md:block">
+                <div className="flex items-center gap-2 mb-8">
+                  <div className="w-6 h-6 rounded bg-primary text-white flex items-center justify-center font-bold text-xs">C</div>
+                  <span className="font-bold text-sm tracking-tight">ClientLoop</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="px-3 py-2 bg-secondary/50 rounded-lg text-sm font-semibold flex items-center gap-2 text-primary">
+                    <Columns className="w-4 h-4" /> Pipeline
+                  </div>
+                  <div className="px-3 py-2 text-sm font-medium text-muted-foreground flex items-center gap-2 hover:bg-muted/30 rounded-lg transition-colors cursor-pointer">
+                    <FileText className="w-4 h-4" /> Proposals
+                  </div>
+                  <div className="px-3 py-2 text-sm font-medium text-muted-foreground flex items-center gap-2 hover:bg-muted/30 rounded-lg transition-colors cursor-pointer">
+                    <Briefcase className="w-4 h-4" /> Clients
+                  </div>
+                  <div className="px-3 py-2 text-sm font-medium text-muted-foreground flex items-center gap-2 hover:bg-muted/30 rounded-lg transition-colors cursor-pointer">
+                    <PieChart className="w-4 h-4" /> Analytics
+                  </div>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="flex-1 p-6 md:p-8 bg-[#F9FAFB] flex flex-col gap-6 overflow-hidden">
+                <div className="flex gap-4 md:gap-6">
+                  <div className="flex-1 bg-white border border-border rounded-2xl shadow-sm p-4 flex flex-col justify-between h-28">
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase">Active Leads</div>
+                    <div>
+                      <div className="text-3xl font-black text-primary">12</div>
+                      <div className="text-xs text-muted-foreground mt-1"><span className="text-green-500 font-medium">+2</span> this week</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 bg-white border border-border rounded-2xl shadow-sm p-4 flex flex-col justify-between h-28 relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent-lime/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/4"></div>
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase relative z-10">Pipeline Value</div>
+                    <div className="relative z-10">
+                      <div className="text-3xl font-black text-primary drop-shadow-sm">₹1.2M</div>
+                      <div className="text-xs text-muted-foreground mt-1">Across 4 prospects</div>
+                    </div>
+                  </div>
+                  <div className="flex-1 bg-white border border-border rounded-2xl shadow-sm p-4 hidden sm:flex flex-col justify-between h-28">
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase">Win Rate</div>
+                    <div>
+                      <div className="text-3xl font-black text-primary">68%</div>
+                      <div className="text-xs text-muted-foreground mt-1"><span className="text-green-500 font-medium">+5%</span> vs last month</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex-1 bg-white border border-border rounded-2xl shadow-sm p-4 flex gap-5 overflow-hidden">
+                  <div className="w-1/3 bg-[#F9FAFB] rounded-xl p-3 flex flex-col gap-3">
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest flex items-center gap-2 mb-1">
+                      <div className="w-2 h-2 rounded-full bg-blue-400"></div>
+                      NEW LEADS <span className="ml-auto bg-muted/50 text-[10px] px-1.5 rounded text-primary">2</span>
+                    </div>
+                    <div className="bg-white border border-border rounded-lg shadow-sm p-3 flex flex-col gap-2">
+                      <div className="font-bold text-sm leading-none">Design System</div>
+                      <div className="text-xs text-muted-foreground">TechStart Inc.</div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <span className="text-[10px] font-bold bg-accent-lime/20 text-primary px-1.5 py-0.5 rounded">₹1.5L</span>
+                        <div className="w-5 h-5 rounded-full bg-muted border border-border"></div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-border rounded-lg shadow-sm p-3 flex flex-col gap-2">
+                      <div className="font-bold text-sm leading-none">Web Revamp</div>
+                      <div className="text-xs text-muted-foreground">Acme Corp</div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <span className="text-[10px] font-bold bg-accent-lime/20 text-primary px-1.5 py-0.5 rounded">₹85K</span>
+                        <div className="w-5 h-5 rounded-full bg-muted border border-border"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-1/3 bg-[#F9FAFB] rounded-xl p-3 flex flex-col gap-3">
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest flex items-center gap-2 mb-1">
+                      <div className="w-2 h-2 rounded-full bg-amber-400"></div>
+                      IN PROGRESS <span className="ml-auto bg-muted/50 text-[10px] px-1.5 rounded text-primary">1</span>
+                    </div>
+                    <div className="bg-white border border-border rounded-lg shadow-sm p-3 flex flex-col gap-2 border-l-2 border-l-amber-400">
+                      <div className="font-bold text-sm leading-none">Pitch Deck</div>
+                      <div className="text-xs text-muted-foreground">Rahul Singh</div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <span className="text-[10px] font-bold bg-accent-lime/20 text-primary px-1.5 py-0.5 rounded">₹45K</span>
+                        <div className="text-[9px] font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded uppercase tracking-wider">Follow up</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-1/3 bg-[#F9FAFB] rounded-xl p-3 flex flex-col gap-3">
+                    <div className="text-[10px] font-bold text-muted-foreground tracking-widest flex items-center gap-2 mb-1">
+                      <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                      WON <span className="ml-auto bg-muted/50 text-[10px] px-1.5 rounded text-primary">1</span>
+                    </div>
+                    <div className="bg-white border border-border rounded-lg shadow-sm p-3 flex flex-col gap-2">
+                      <div className="font-bold text-sm leading-none">Consultation</div>
+                      <div className="text-xs text-muted-foreground">Stripe</div>
+                      <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
+                        <span className="text-[10px] font-bold bg-accent-lime/20 text-primary px-1.5 py-0.5 rounded">₹20K</span>
+                        <div className="text-[9px] font-bold text-green-600 bg-green-50 px-1.5 py-0.5 rounded uppercase tracking-wider">Closed</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>

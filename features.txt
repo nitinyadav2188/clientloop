@@ -1,0 +1,91 @@
+
+      {/* Features */}
+      <section id="features" className="py-32 px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-20 items-center mb-32">
+            <div>
+              <div className="w-12 h-12 bg-accent-blue/10 text-accent-blue rounded-xl flex items-center justify-center mb-6">
+                <Brain className="w-6 h-6" />
+              </div>
+              <h3 className="text-3xl font-bold mb-4">AI Lead Extraction</h3>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Just paste a client's message from anywhere. Our AI instantly extracts the project details, budget, requirements, and creates a lead profile for you.
+              </p>
+              <ul className="space-y-3 font-medium">
+                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Zero manual data entry</li>
+                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Understands lead temperature</li>
+                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Recommends next actions</li>
+              </ul>
+            </div>
+            <div className="bg-white p-8 rounded-3xl shadow-xl border">
+              <div className="bg-muted/30 rounded-xl p-4 text-sm mb-6 border">
+                "Hey, I need someone to redesign our SaaS landing page. Budget around 50k. Can you send your portfolio?"
+              </div>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
+                  <span className="text-muted-foreground text-sm">Project</span>
+                  <span className="font-medium">SaaS Landing Page</span>
+                </div>
+                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
+                  <span className="text-muted-foreground text-sm">Value</span>
+                  <span className="font-medium">₹50,000</span>
+                </div>
+                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
+                  <span className="text-muted-foreground text-sm">Action</span>
+                  <span className="font-medium text-accent-blue">Send Portfolio</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-20 items-center mb-32 md:flex-row-reverse">
+            <div className="order-1 md:order-2">
+              <div className="w-12 h-12 bg-[#C8FF2C]/20 text-[#111111] rounded-xl flex items-center justify-center mb-6">
+                <Calendar className="w-6 h-6" />
+              </div>
+              <h3 className="text-3xl font-bold mb-4">Never Forget a Follow-up</h3>
+              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                Know exactly who needs your attention today. ClientLoop organizes your follow-ups so you never let a warm lead go cold.
+              </p>
+              <Button variant="outline" className="rounded-full">See follow-up features</Button>
+            </div>
+            <div className="order-2 md:order-1 bg-primary text-white p-8 rounded-3xl shadow-xl">
+              <h4 className="font-semibold mb-6 text-white/80">Today's Tasks</h4>
+              <div className="space-y-4">
+                <div className="bg-white/10 border border-white/20 p-4 rounded-xl flex justify-between items-center">
+                  <div>
+                    <div className="font-medium">Rahul Sharma</div>
+                    <div className="text-sm text-white/60">Proposal sent 3 days ago</div>
+                  </div>
+                  <Button size="sm" className="bg-[#C8FF2C] text-black hover:bg-[#C8FF2C]/90">Follow Up</Button>
+                </div>
+                <div className="bg-white/5 border border-white/10 p-4 rounded-xl flex justify-between items-center">
+                  <div>
+                    <div className="font-medium text-white/60">Priya Patel</div>
+                    <div className="text-sm text-white/40">Initial contact</div>
+                  </div>
+                  <Button size="sm" variant="outline" className="border-white/20 text-white hover:bg-white/10">Snooze</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid sm:grid-cols-3 gap-8">
+            <Card className="p-6 border-none shadow-md bg-white">
+              <Columns className="w-8 h-8 text-accent-blue mb-4" />
+              <h4 className="font-bold text-lg mb-2">Visual Pipeline</h4>
+              <p className="text-muted-foreground text-sm">Drag and drop leads through your sales stages. Always know where your money is.</p>
+            </Card>
+            <Card className="p-6 border-none shadow-md bg-white">
+              <FileText className="w-8 h-8 text-accent-blue mb-4" />
+              <h4 className="font-bold text-lg mb-2">Track Proposals</h4>
+              <p className="text-muted-foreground text-sm">Log your sent proposals, track their status, and get reminded before they expire.</p>
+            </Card>
+            <Card className="p-6 border-none shadow-md bg-white">
+              <PieChart className="w-8 h-8 text-accent-blue mb-4" />
+              <h4 className="font-bold text-lg mb-2">Revenue Visibility</h4>
+              <p className="text-muted-foreground text-sm">See exactly how much you've won, and what's currently sitting in your pipeline.</p>
+            </Card>
+          </div>
+        </div>
+      </section>

@@ -3,7 +3,7 @@ export type LeadTemperature = 'hot' | 'warm' | 'cold';
 export type LeadStage = 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'won' | 'lost';
 export type ProposalStatus = 'draft' | 'sent' | 'viewed' | 'accepted' | 'rejected';
 export type Plan = 'free' | 'pro' | 'business';
-export type NotificationType = 'missed_follow_up' | 'proposal_viewed' | 'new_lead' | 'system';
+export type NotificationType = 'missed_follow_up' | 'proposal_viewed' | 'new_lead' | 'system' | 'project_due';
 
 export interface User {
   id: string;
@@ -44,6 +44,7 @@ export interface Lead {
   status: 'active' | 'inactive';
   created_at: string;
   updated_at: string;
+  project_due_date?: string;
 }
 
 export interface Proposal {
@@ -68,6 +69,7 @@ export interface Client {
   phone?: string;
   total_revenue: number;
   created_at: string;
+  project_due_date?: string;
 }
 
 export interface FollowUp {

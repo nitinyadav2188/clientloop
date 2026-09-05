@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Check, ArrowRight, MessageSquare, Briefcase, Mail, Columns, Brain, Calendar, FileText, PieChart } from 'lucide-react';
+import { Check, ArrowDown, ArrowRight, MessageSquare, Briefcase, Mail, Columns, Brain, Calendar, FileText, PieChart } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -29,25 +29,25 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F7F7F2] text-[#111111] font-sans selection:bg-[#C8FF2C] selection:text-black">
       {/* Navigation */}
-      <nav className="border-b bg-white/50 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-              <div className="w-4 h-4 bg-accent-lime rounded-sm rotate-45"></div>
+      <nav className="border-b border-border bg-white sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <div className="w-4 h-4 bg-[#C8FF2C] rounded-sm rotate-45"></div>
             </div>
-            <span className="font-black text-xl tracking-tighter uppercase">ClientLoop</span>
+            <span className="font-black text-2xl tracking-tighter uppercase">ClientLoop</span>
           </div>
           
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
+          <div className="hidden md:flex items-center gap-10 text-[13px] font-black tracking-widest text-muted-foreground uppercase">
             <a href="#product" className="hover:text-primary transition-colors">Product</a>
-            <a href="#features" className="hover:text-primary transition-colors">Features</a>
+            <a href="#how-it-works" className="hover:text-primary transition-colors">How it works</a>
             <a href="#pricing" className="hover:text-primary transition-colors">Pricing</a>
             <a href="#founder" className="hover:text-primary transition-colors">About</a>
           </div>
           
-          <div className="flex items-center gap-4">
-            <Link to="/app" className="text-sm font-medium hover:text-muted-foreground hidden sm:block">Sign In</Link>
-            <Button onClick={() => handleLogin()} className="bg-primary text-white hover:bg-primary/90 rounded-full px-6">
+          <div className="flex items-center gap-6">
+            <Link to="/app" className="text-[13px] font-black tracking-widest uppercase hover:text-primary hidden sm:block">Sign In</Link>
+            <Button onClick={() => handleLogin()} className="rounded-full px-8 h-10">
               Get Started
             </Button>
           </div>
@@ -55,26 +55,52 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 overflow-hidden relative">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#E5E7EB_1px,transparent_1px)] [background-size:24px_24px] opacity-40 pointer-events-none"></div>
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center rounded-full border border-border bg-white px-3 py-1 text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-8">
+      <section className="pt-32 pb-24 px-6 overflow-hidden relative flex flex-col items-center justify-center min-h-[90vh]">
+        {/* Vibrant Ambient Orbs */}
+        <div className="absolute top-1/4 -left-20 w-[40rem] h-[40rem] bg-[#FF3366]/20 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+        <div className="absolute bottom-1/4 -right-20 w-[40rem] h-[40rem] bg-[#00E5FF]/20 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-[#C8FF2C]/20 rounded-full blur-[120px] pointer-events-none mix-blend-multiply"></div>
+        
+        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(#E5E7EB_2px,transparent_2px)] [background-size:32px_32px] opacity-60 pointer-events-none z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background pointer-events-none z-0"></div>
+        
+        <div className="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center mt-10 md:mt-0">
+          <div className="inline-flex items-center rounded-full border border-border/80 bg-white/80 backdrop-blur-md px-4 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-primary mb-10 shadow-sm transition-transform hover:scale-105 cursor-default">
+            <span className="w-2 h-2 rounded-full bg-[#C8FF2C] mr-3 animate-pulse"></span>
             The client pipeline for freelancers
           </div>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.95] mb-8">
-            STOP LOSING CLIENTS <br className="hidden md:block"/>
-            <span className="text-accent">IN YOUR DMS.</span>
+          
+          <h1 className="text-[3.5rem] leading-[0.9] sm:text-7xl md:text-8xl lg:text-[8rem] font-black tracking-tighter uppercase lg:leading-[0.85] mb-8 text-primary max-w-6xl mx-auto">
+            STOP LOSING CLIENTS <br className="hidden sm:block" />
+            <span className="inline-block relative whitespace-nowrap mt-4 sm:mt-2">
+              <span className="relative z-10 px-4 sm:px-6 text-white">IN YOUR DMS.</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#3F46FF] via-[#9D4EDD] to-[#FF3366] -z-10 -rotate-2 rounded-2xl scale-105 origin-center shadow-2xl"></div>
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            ClientLoop brings your leads, conversations, follow-ups and proposals into one simple workspace.
+          
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto mb-12 leading-relaxed px-4">
+            ClientLoop brings your leads, conversations, follow-ups and proposals into one <strong className="text-white font-black uppercase tracking-widest text-[11px] sm:text-[13px] bg-gradient-to-r from-[#00E5FF] to-[#3F46FF] px-3 py-1.5 rounded-lg mx-1 shadow-md">simple workspace</strong> designed specifically for freelancers.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" onClick={() => handleLogin()} className="rounded-full px-8 h-14 text-base bg-primary text-white hover:bg-primary/90 w-full sm:w-auto">
-              Start Free
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto px-6 sm:px-0">
+            <Button size="lg" onClick={() => handleLogin()} className="rounded-full px-10 h-14 text-base w-full sm:w-auto">
+              Start for free
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-base w-full sm:w-auto bg-white/50 backdrop-blur-sm">
-              See how it works
-            </Button>
+            <div className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })} className="rounded-full px-10 h-14 text-base w-full sm:w-auto">
+                See how it works
+              </Button>
+            </div>
+          </div>
+          
+          <div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 text-xs font-black text-muted-foreground uppercase tracking-widest">
+            <div className="flex -space-x-3">
+              <div className="w-10 h-10 rounded-full border-2 border-[#F7F7F2] bg-gray-200 overflow-hidden shadow-sm"><img src="https://i.pravatar.cc/100?img=33" alt="avatar" /></div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#F7F7F2] bg-gray-300 overflow-hidden shadow-sm"><img src="https://i.pravatar.cc/100?img=47" alt="avatar" /></div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#F7F7F2] bg-gray-400 overflow-hidden shadow-sm"><img src="https://i.pravatar.cc/100?img=12" alt="avatar" /></div>
+              <div className="w-10 h-10 rounded-full border-2 border-[#F7F7F2] bg-primary text-white flex items-center justify-center text-[10px] shadow-sm z-10">+1k</div>
+            </div>
+            <p className="mt-2 sm:mt-0">Joined by 1,000+ freelancers</p>
           </div>
         </div>
       </section>
@@ -217,37 +243,38 @@ export default function LandingPage() {
       </section>
 
       {/* Social Proof */}
-      <section className="py-16 border-y bg-white">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <p className="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8">Built for people who sell their skills.</p>
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
-            {['Designers', 'Developers', 'Video Editors', 'Copywriters', 'Marketers', 'Consultants'].map(role => (
-              <span key={role} className="text-xl md:text-2xl font-bold text-primary/30">{role}</span>
+      <section className="py-24 border-y border-border bg-[#FAFAFA]">
+        <div className="max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+          <p className="text-sm font-bold tracking-[0.2em] text-muted-foreground uppercase mb-16 text-center">Built for people who sell their skills.</p>
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-8 max-w-4xl mx-auto items-center text-center">
+            {['Designers', 'Developers', 'Video Editors', 'Copywriters', 'Marketers'].map(role => (
+              <span key={role} className="text-2xl md:text-4xl font-black text-muted-foreground/40">{role}</span>
             ))}
+            <span className="text-2xl md:text-4xl font-black text-muted-foreground/40 w-full text-center mt-2">Consultants</span>
           </div>
         </div>
       </section>
 
       {/* Problem Section */}
-      <section id="product" className="py-32 px-6 bg-primary text-white">
+      <section id="product" className="py-32 px-6 bg-[#111111] text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-16 leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-16 leading-tight uppercase tracking-tight">
             YOUR CLIENTS ARE EVERYWHERE.<br/>
-            <span className="text-muted-foreground">YOUR PIPELINE SHOULDN'T BE.</span>
+            <span className="text-white/30">YOUR PIPELINE SHOULDN'T BE.</span>
           </h2>
           
-          <div className="flex flex-wrap justify-center gap-4 mb-20">
+          <div className="flex flex-wrap justify-center gap-4 mb-24">
             {['WhatsApp', 'LinkedIn', 'Email', 'Instagram', 'Referrals', 'Spreadsheets'].map(source => (
-              <div key={source} className="px-6 py-3 rounded-full border border-white/20 bg-white/5 text-white/60 font-medium">
+              <div key={source} className="px-6 py-3 rounded-full border border-white/10 bg-transparent text-white/70 font-medium text-sm md:text-base">
                 {source}
               </div>
             ))}
           </div>
           
-          <ArrowRight className="w-12 h-12 mx-auto text-accent-lime mb-20 rotate-90" />
+          <ArrowDown className="w-10 h-10 mx-auto text-[#C8FF2C] mb-24 stroke-[3]" />
           
-          <div className="text-5xl font-black tracking-tight mb-8">CLIENTLOOP</div>
-          <div className="grid sm:grid-cols-3 gap-8 text-xl font-medium text-white/80">
+          <div className="text-5xl md:text-6xl font-black tracking-tighter mb-12">CLIENTLOOP</div>
+          <div className="grid sm:grid-cols-3 gap-8 text-xl font-medium text-white/90">
             <div>One pipeline.</div>
             <div>One follow-up system.</div>
             <div>One place to close.</div>
@@ -255,99 +282,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-20 items-center mb-32">
-            <div>
-              <div className="w-12 h-12 bg-accent-blue/10 text-accent-blue rounded-xl flex items-center justify-center mb-6">
-                <Brain className="w-6 h-6" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4">AI Lead Extraction</h3>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Just paste a client's message from anywhere. Our AI instantly extracts the project details, budget, requirements, and creates a lead profile for you.
-              </p>
-              <ul className="space-y-3 font-medium">
-                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Zero manual data entry</li>
-                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Understands lead temperature</li>
-                <li className="flex items-center gap-3"><Check className="text-accent-lime" /> Recommends next actions</li>
-              </ul>
-            </div>
-            <div className="bg-white p-8 rounded-3xl shadow-xl border">
-              <div className="bg-muted/30 rounded-xl p-4 text-sm mb-6 border">
-                "Hey, I need someone to redesign our SaaS landing page. Budget around 50k. Can you send your portfolio?"
-              </div>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
-                  <span className="text-muted-foreground text-sm">Project</span>
-                  <span className="font-medium">SaaS Landing Page</span>
-                </div>
-                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
-                  <span className="text-muted-foreground text-sm">Value</span>
-                  <span className="font-medium">₹50,000</span>
-                </div>
-                <div className="flex justify-between items-center p-3 border rounded-lg bg-background">
-                  <span className="text-muted-foreground text-sm">Action</span>
-                  <span className="font-medium text-accent-blue">Send Portfolio</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-20 items-center mb-32 md:flex-row-reverse">
-            <div className="order-1 md:order-2">
-              <div className="w-12 h-12 bg-[#C8FF2C]/20 text-[#111111] rounded-xl flex items-center justify-center mb-6">
-                <Calendar className="w-6 h-6" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4">Never Forget a Follow-up</h3>
-              <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-                Know exactly who needs your attention today. ClientLoop organizes your follow-ups so you never let a warm lead go cold.
-              </p>
-              <Button variant="outline" className="rounded-full">See follow-up features</Button>
-            </div>
-            <div className="order-2 md:order-1 bg-primary text-white p-8 rounded-3xl shadow-xl">
-              <h4 className="font-semibold mb-6 text-white/80">Today's Tasks</h4>
-              <div className="space-y-4">
-                <div className="bg-white/10 border border-white/20 p-4 rounded-xl flex justify-between items-center">
-                  <div>
-                    <div className="font-medium">Rahul Sharma</div>
-                    <div className="text-sm text-white/60">Proposal sent 3 days ago</div>
-                  </div>
-                  <Button size="sm" className="bg-[#C8FF2C] text-black hover:bg-[#C8FF2C]/90">Follow Up</Button>
-                </div>
-                <div className="bg-white/5 border border-white/10 p-4 rounded-xl flex justify-between items-center">
-                  <div>
-                    <div className="font-medium text-white/60">Priya Patel</div>
-                    <div className="text-sm text-white/40">Initial contact</div>
-                  </div>
-                  <Button size="sm" variant="outline" className="border-white/20 text-white hover:bg-white/10">Snooze</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="grid sm:grid-cols-3 gap-8">
-            <Card className="p-6 border-none shadow-md bg-white">
-              <Columns className="w-8 h-8 text-accent-blue mb-4" />
-              <h4 className="font-bold text-lg mb-2">Visual Pipeline</h4>
-              <p className="text-muted-foreground text-sm">Drag and drop leads through your sales stages. Always know where your money is.</p>
-            </Card>
-            <Card className="p-6 border-none shadow-md bg-white">
-              <FileText className="w-8 h-8 text-accent-blue mb-4" />
-              <h4 className="font-bold text-lg mb-2">Track Proposals</h4>
-              <p className="text-muted-foreground text-sm">Log your sent proposals, track their status, and get reminded before they expire.</p>
-            </Card>
-            <Card className="p-6 border-none shadow-md bg-white">
-              <PieChart className="w-8 h-8 text-accent-blue mb-4" />
-              <h4 className="font-bold text-lg mb-2">Revenue Visibility</h4>
-              <p className="text-muted-foreground text-sm">See exactly how much you've won, and what's currently sitting in your pipeline.</p>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* How it works */}
-      <section className="py-32 px-6 bg-white border-y border-border">
+      <section id="how-it-works" className="py-32 px-6 bg-white border-y border-border">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12 md:items-end justify-between mb-16">
             <div className="max-w-2xl">
@@ -458,8 +394,8 @@ export default function LandingPage() {
               <Button className="w-full" variant="outline" onClick={() => handleLogin()}>Start Free</Button>
             </Card>
             
-            <Card className="p-8 border-2 border-primary shadow-xl flex flex-col relative transform md:-translate-y-4">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white px-3 py-1 text-xs font-bold tracking-wider rounded-full uppercase">
+            <Card className="p-8 border-2 border-[#3F46FF] shadow-2xl shadow-[#3F46FF]/10 flex flex-col relative transform md:-translate-y-4">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-[#3F46FF] to-[#00E5FF] text-white px-4 py-1.5 text-[10px] font-black tracking-widest rounded-full uppercase shadow-md">
                 Recommended
               </div>
               <h3 className="font-bold text-xl mb-2">PRO</h3>
@@ -471,7 +407,7 @@ export default function LandingPage() {
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="font-medium">Proposal tracking</span></li>
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="font-medium">Revenue analytics</span></li>
               </ul>
-              <Button className="w-full bg-primary text-white" onClick={() => handleLogin()}>Start Pro</Button>
+              <Button className="w-full" onClick={() => handleLogin()}>Start Pro</Button>
             </Card>
             
             <Card className="p-8 border shadow-sm flex flex-col">
@@ -498,44 +434,83 @@ export default function LandingPage() {
         <p className="text-xl font-medium mb-12 max-w-2xl mx-auto">
           Capture the conversation. Follow up at the right time. Close the deal.
         </p>
-        <Button size="lg" className="rounded-full px-12 h-16 text-lg bg-primary text-white hover:bg-primary/90" onClick={() => handleLogin()}>
+        <Button size="lg" className="rounded-full px-12 h-14 text-base" onClick={() => handleLogin()}>
           Start Free Now
         </Button>
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary text-white py-16 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-12">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                <span className="text-primary font-bold text-lg leading-none">C</span>
+      <footer className="bg-[#0A0A0A] text-white pt-20 pb-10 px-6 border-t border-white/10 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-[#FF3366]/50 to-transparent" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-full max-w-lg h-24 bg-[#FF3366]/20 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 mb-16 relative z-10">
+          {/* Brand Col */}
+          <div className="md:col-span-5 lg:col-span-4">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#3F46FF] to-[#FF3366] p-[2px]">
+                <div className="w-full h-full bg-[#0A0A0A] rounded-[10px] flex items-center justify-center">
+                  <span className="text-white font-black text-xl leading-none">C</span>
+                </div>
               </div>
-              <span className="font-bold text-xl tracking-tight">ClientLoop</span>
+              <span className="font-black text-2xl tracking-tighter text-white">ClientLoop</span>
             </div>
-            <p className="text-white/60 mb-6">Turn conversations into clients.</p>
-            <div className="text-white/40 text-sm">
-              Built by Nitin Yadav
+            <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-sm font-medium">
+              The modern CRM built specifically for freelancers and independent consultants. Turn scattered conversations into booked clients and closed deals.
+            </p>
+            <div className="flex items-center gap-4">
+              {/* Social links */}
+              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#00E5FF] hover:bg-white/10 hover:border-[#00E5FF]/30 transition-all">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-[#FF3366] hover:bg-white/10 hover:border-[#FF3366]/30 transition-all">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" /></svg>
+              </a>
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-12">
-            <div>
-              <h4 className="font-semibold mb-4 text-white/80">Product</h4>
-              <ul className="space-y-3 text-sm text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4 text-white/80">Legal</h4>
-              <ul className="space-y-3 text-sm text-white/60">
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-              </ul>
-            </div>
+          {/* Links Col 1 */}
+          <div className="md:col-span-2 lg:col-span-2 lg:col-start-7">
+            <h4 className="font-bold mb-6 text-white text-sm uppercase tracking-widest">Product</h4>
+            <ul className="space-y-4 text-sm text-white/50 font-medium">
+              <li><a href="#features" className="hover:text-[#00E5FF] transition-colors">Features</a></li>
+              <li><a href="#how-it-works" className="hover:text-[#00E5FF] transition-colors">How it works</a></li>
+              <li><a href="#pricing" className="hover:text-[#00E5FF] transition-colors">Pricing</a></li>
+              <li><a href="#" className="hover:text-[#00E5FF] transition-colors">Changelog</a></li>
+            </ul>
+          </div>
+
+          {/* Links Col 2 */}
+          <div className="md:col-span-2 lg:col-span-2">
+            <h4 className="font-bold mb-6 text-white text-sm uppercase tracking-widest">Company</h4>
+            <ul className="space-y-4 text-sm text-white/50 font-medium">
+              <li><a href="#founder" className="hover:text-[#FF3366] transition-colors">About</a></li>
+              <li><a href="#" className="hover:text-[#FF3366] transition-colors">Blog</a></li>
+              <li><a href="#" className="hover:text-[#FF3366] transition-colors">Careers</a></li>
+              <li><a href="#" className="hover:text-[#FF3366] transition-colors">Contact</a></li>
+            </ul>
+          </div>
+
+          {/* Links Col 3 */}
+          <div className="md:col-span-3 lg:col-span-2">
+            <h4 className="font-bold mb-6 text-white text-sm uppercase tracking-widest">Legal</h4>
+            <ul className="space-y-4 text-sm text-white/50 font-medium">
+              <li><a href="#" className="hover:text-[#9D4EDD] transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="hover:text-[#9D4EDD] transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-[#9D4EDD] transition-colors">Cookie Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom Banner */}
+        <div className="max-w-6xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+          <p className="text-white/40 text-sm font-medium">
+            © {new Date().getFullYear()} ClientLoop. Built by <span className="text-white/60 font-bold hover:text-white transition-colors cursor-pointer">Nitin Yadav</span>.
+          </p>
+          <div className="flex items-center gap-2 text-sm font-bold text-white/40">
+            <div className="w-2 h-2 rounded-full bg-[#00E5FF] animate-pulse"></div>
+            All systems operational
           </div>
         </div>
       </footer>

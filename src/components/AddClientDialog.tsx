@@ -21,7 +21,8 @@ export function AddClientDialog({ open, onOpenChange }: AddClientDialogProps) {
     company: '',
     email: '',
     phone: '',
-    total_revenue: 0
+    total_revenue: 0,
+    lead_id: 'direct'
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +34,8 @@ export function AddClientDialog({ open, onOpenChange }: AddClientDialogProps) {
       await addClient(formData);
       toast({ title: 'Client added successfully', type: 'success' });
       onOpenChange(false);
-      setFormData({ name: '', company: '', email: '', phone: '', total_revenue: 0 });
+      setFormData({ name: '', company: '', email: '', phone: '', total_revenue: 0,
+    lead_id: 'direct' });
     } catch (error) {
       toast({ title: 'Failed to add client', type: 'error' });
     } finally {

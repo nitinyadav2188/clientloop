@@ -3,10 +3,10 @@ import sys
 with open('src/pages/LandingPage.tsx', 'r') as f:
     content = f.read()
 
-with open('old_social.txt', 'r') as f:
+with open('old_landing_nav.txt', 'r') as f:
     old_content = f.read()
 
-with open('patch_social.txt', 'r') as f:
+with open('patch_landing_nav.txt', 'r') as f:
     new_content = f.read()
 
 if old_content in content:

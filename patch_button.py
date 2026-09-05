@@ -1,10 +1,12 @@
-import * as React from "react"
+import sys
+
+content = """import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xl font-bold font-sans ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-bold font-sans ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]",
   {
     variants: {
       variant: {
@@ -16,9 +18,9 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "p-[12px] text-sm leading-none",
-        sm: "px-3 py-2 text-xs rounded-lg leading-none",
-        lg: "px-6 py-[16px] text-base rounded-xl leading-none",
+        default: "h-10 px-5 py-2",
+        sm: "h-9 rounded-lg px-4",
+        lg: "h-12 rounded-xl px-8 text-base",
         icon: "h-10 w-10",
       },
     },
@@ -50,3 +52,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+"""
+
+with open('src/components/ui/button.tsx', 'w') as f:
+    f.write(content)
+
+print("Button component patched")

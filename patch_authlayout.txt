@@ -5,8 +5,6 @@ import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '@/hooks/useNotifications';
-import { GlobalSearch } from '@/components/GlobalSearch';
-
 
 export default function AuthLayout() {
   const location = useLocation();
@@ -45,8 +43,8 @@ export default function AuthLayout() {
       )}>
         <div className="flex items-center gap-3 mb-12 mt-2">
           <Link to="/app" className="flex items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
-            <div className="w-10 h-10 bg-gradient-to-br from-[#FF3366] to-[#FF9933] rounded-xl flex items-center justify-center shadow-lg shadow-[#FF3366]/20">
-              <div className="w-4 h-4 bg-white rounded-sm rotate-45 shadow-sm"></div>
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+              <div className="w-4 h-4 bg-[#C8FF2C] rounded-sm rotate-45"></div>
             </div>
             <span className="font-black text-2xl tracking-tighter uppercase">ClientLoop</span>
           </Link>
@@ -61,7 +59,7 @@ export default function AuthLayout() {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-black uppercase tracking-widest transition-colors",
                 location.pathname === item.path || (location.pathname.startsWith(item.path) && item.path !== '/app')
-                  ? "bg-gradient-to-r from-[#FF3366] to-[#9D4EDD] text-white shadow-lg shadow-[#FF3366]/20 border-none"
+                  ? "bg-primary text-[#C8FF2C] shadow-md"
                   : "text-muted-foreground hover:bg-muted/50 hover:text-primary"
               )}
             >
@@ -78,7 +76,7 @@ export default function AuthLayout() {
               className={cn(
                 "flex items-center justify-between px-4 py-3 rounded-xl text-[13px] font-black uppercase tracking-widest transition-colors",
                 location.pathname.startsWith('/app/notifications')
-                  ? "bg-gradient-to-r from-[#FF3366] to-[#9D4EDD] text-white shadow-lg shadow-[#FF3366]/20 border-none"
+                  ? "bg-primary text-[#C8FF2C] shadow-md"
                   : "text-muted-foreground hover:bg-muted/50 hover:text-primary"
               )}
             >
@@ -87,7 +85,7 @@ export default function AuthLayout() {
                 Alerts
               </div>
               {unreadCount > 0 && (
-                <span className="bg-gradient-to-r from-[#00E5FF] to-[#3F46FF] text-white text-[10px] font-black w-5 h-5 rounded-md flex items-center justify-center shadow-sm">
+                <span className="bg-[#C8FF2C] text-primary text-[10px] font-black w-5 h-5 rounded-md flex items-center justify-center shadow-sm">
                   {unreadCount}
                 </span>
               )}
@@ -98,7 +96,7 @@ export default function AuthLayout() {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-[13px] font-black uppercase tracking-widest transition-colors",
                 location.pathname.startsWith('/app/settings')
-                  ? "bg-gradient-to-r from-[#FF3366] to-[#9D4EDD] text-white shadow-lg shadow-[#FF3366]/20 border-none"
+                  ? "bg-primary text-[#C8FF2C] shadow-md"
                   : "text-muted-foreground hover:bg-muted/50 hover:text-primary"
               )}
             >
@@ -111,12 +109,12 @@ export default function AuthLayout() {
         <div className="mt-auto pt-6 border-t border-border">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00E5FF] to-[#3F46FF] text-white shadow-md flex items-center justify-center font-black text-lg">
+              <div className="w-12 h-12 rounded-xl bg-primary text-white border-2 border-transparent flex items-center justify-center font-black text-lg">
                 {user.name.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-black truncate">{user.name}</p>
-                <p className="text-[10px] text-white bg-gradient-to-r from-[#9D4EDD] to-[#FF3366] px-2 py-0.5 rounded-md inline-block uppercase tracking-widest font-black truncate mt-1 shadow-sm">{user.plan}</p>
+                <p className="text-[10px] text-[#C8FF2C] bg-primary px-2 py-0.5 rounded-full inline-block uppercase tracking-widest font-black truncate mt-1">{user.plan}</p>
               </div>
             </div>
             <button onClick={logout} className="p-3 text-muted-foreground hover:text-destructive transition-colors rounded-xl hover:bg-red-50">
@@ -127,9 +125,7 @@ export default function AuthLayout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F9FAFB] relative">
-        <div className="absolute top-[-10%] right-[-5%] w-[40rem] h-[40rem] bg-[#FF3366]/5 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
-        <div className="absolute bottom-[-10%] left-[-5%] w-[40rem] h-[40rem] bg-[#00E5FF]/5 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F9FAFB]">
         {/* Top bar */}
         <header className="h-24 flex items-center justify-between px-6 lg:px-10 border-b border-border bg-white flex-shrink-0 z-10 shadow-sm">
           <div className="flex items-center flex-1 max-w-lg gap-4">
@@ -139,14 +135,21 @@ export default function AuthLayout() {
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
             </button>
-            <GlobalSearch />
+            <div className="relative w-full hidden sm:block">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="SEARCH LEADS, CLIENTS OR PROJECTS..."
+                className="w-full pl-12 pr-4 py-3.5 bg-muted/30 border border-border rounded-2xl text-[11px] font-black tracking-widest uppercase focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+              />
+            </div>
           </div>
           <div className="flex items-center gap-3 sm:gap-6 ml-4">
             <button onClick={() => navigate('/app/notifications')} className="text-muted-foreground hover:text-primary relative p-3 bg-muted/30 rounded-2xl transition-colors">
               <Bell className="w-5 h-5" />
-              {unreadCount > 0 && <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-[#FF3366] rounded-full ring-2 ring-white animate-pulse"></span>}
+              {unreadCount > 0 && <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-[#C8FF2C] rounded-full ring-2 ring-white"></span>}
             </button>
-            <Button onClick={() => navigate('/app/leads?new=true')} size="lg" className="rounded-full">
+            <Button onClick={() => navigate('/app/leads?new=true')} className="bg-primary text-[#C8FF2C] hover:bg-primary/90 rounded-full h-12 px-6 text-[12px] font-black tracking-widest uppercase shadow-md">
               <Plus className="w-4 h-4 mr-2" /> Add Lead
             </Button>
           </div>

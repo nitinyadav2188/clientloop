@@ -28,6 +28,7 @@ export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModa
     email: '',
     project: '',
     estimated_value: 0,
+    project_due_date: '',
     source: 'email',
     temperature: 'warm',
     stage: 'new',
@@ -73,6 +74,7 @@ export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModa
         status: 'active',
         last_contact_at: new Date().toISOString(),
         next_follow_up_at: tomorrow.toISOString(),
+        project_due_date: formData.project_due_date || undefined,
       });
       
       toast({ title: 'Lead saved', type: 'success' });
@@ -177,6 +179,14 @@ export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModa
                     value={formData.estimated_value || ''} 
                     onChange={e => setFormData({...formData, estimated_value: Number(e.target.value)})} 
                     placeholder="50000"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Due Date (Optional)</Label>
+                  <Input 
+                    type="date"
+                    value={formData.project_due_date || ''} 
+                    onChange={e => setFormData({...formData, project_due_date: e.target.value})} 
                   />
                 </div>
                 <div className="space-y-2">

@@ -1,0 +1,11 @@
+      {/* Social Proof */}
+      <section className="py-16 border-y bg-white">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8">Built for people who sell their skills.</p>
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+            {['Designers', 'Developers', 'Video Editors', 'Copywriters', 'Marketers', 'Consultants'].map(role => (
+              <span key={role} className="text-xl md:text-2xl font-bold text-primary/30">{role}</span>
+            ))}
+          </div>
+        </div>
+      </section>

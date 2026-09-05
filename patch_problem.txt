@@ -1,0 +1,26 @@
+      {/* Problem Section */}
+      <section id="product" className="py-32 px-6 bg-[#111111] text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-16 leading-tight uppercase tracking-tight">
+            YOUR CLIENTS ARE EVERYWHERE.<br/>
+            <span className="text-white/30">YOUR PIPELINE SHOULDN'T BE.</span>
+          </h2>
+          
+          <div className="flex flex-wrap justify-center gap-4 mb-24">
+            {['WhatsApp', 'LinkedIn', 'Email', 'Instagram', 'Referrals', 'Spreadsheets'].map(source => (
+              <div key={source} className="px-6 py-3 rounded-full border border-white/10 bg-transparent text-white/70 font-medium text-sm md:text-base">
+                {source}
+              </div>
+            ))}
+          </div>
+          
+          <ArrowDown className="w-10 h-10 mx-auto text-[#C8FF2C] mb-24 stroke-[3]" />
+          
+          <div className="text-5xl md:text-6xl font-black tracking-tighter mb-12">CLIENTLOOP</div>
+          <div className="grid sm:grid-cols-3 gap-8 text-xl font-medium text-white/90">
+            <div>One pipeline.</div>
+            <div>One follow-up system.</div>
+            <div>One place to close.</div>
+          </div>
+        </div>
+      </section>

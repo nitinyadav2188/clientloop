@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { store } from '@/lib/store';
+import { useLeads } from '@/hooks/useLeads';
 import { Lead } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -16,6 +16,7 @@ import {
 import { format, parseISO } from 'date-fns';
 
 export default function LeadDetail() {
+  const { leads, updateLead, deleteLead } = useLeads();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -28,7 +29,7 @@ export default function LeadDetail() {
 
   useEffect(() => {
     if (id) {
-      const leads = store.getLeads();
+      
       const found = leads.find(l => l.id === id);
       if (found) {
         setLead(found);
@@ -46,9 +47,9 @@ export default function LeadDetail() {
     }
   }, [id]);
 
-  const handleStageChange = (newStage: string) => {
+  const handleStageChange = async (newStage: string) => {
     if (lead) {
-      const updated = store.updateLead(lead.id, { stage: newStage as any });
+      await updateLead(lead.id, { stage: newStage as any }); const updated = { ...lead, stage: newStage as any };
       setLead(updated);
       toast({ title: 'Stage updated', type: 'success' });
     }
@@ -110,9 +111,9 @@ export default function LeadDetail() {
             <Sparkles className="w-4 h-4 mr-2" />
             AI Follow-up
           </Button>
-          <Button variant="outline" onClick={() => {
+          <Button variant="outline" onClick={async () => {
             if (confirm('Are you sure you want to delete this lead?')) {
-              store.deleteLead(lead.id);
+              await deleteLead(lead.id);
               toast({ title: 'Lead deleted', type: 'success' });
               navigate('/app/leads');
             }

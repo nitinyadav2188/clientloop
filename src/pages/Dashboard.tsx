@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { store } from '@/lib/store';
+import { useLeads } from '@/hooks/useLeads';
+import { useAuth } from '@/contexts/AuthContext';
 import { Lead } from '@/types';
 import { ArrowRight, CheckCircle2, Clock, Calendar } from 'lucide-react';
 import { format, isToday, isPast, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Dashboard() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const user = store.getUser();
+  const { leads, loading } = useLeads();
+  const { profile } = useAuth();
+  const user = profile || { name: ' ', plan: 'free' };
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLeads(store.getLeads());
-  }, []);
 
   const totalLeads = leads.length;
   const pipelineValue = leads
@@ -38,6 +37,37 @@ export default function Dashboard() {
     if (amount >= 1000) return `₹${(amount / 1000).toFixed(1)}K`;
     return `₹${amount}`;
   };
+
+  if (loading) {
+    return (
+      <div className="flex-1 overflow-hidden flex flex-col gap-8 h-full">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-10 w-3/4 max-w-md" />
+          <Skeleton className="h-5 w-1/2 max-w-xs mt-2" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="bg-card border border-border p-5 rounded-2xl">
+              <Skeleton className="h-3 w-20 mb-2" />
+              <Skeleton className="h-8 w-16" />
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col lg:flex-row gap-6 overflow-hidden flex-1 min-h-0">
+          <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+             <Skeleton className="h-6 w-40" />
+             <div className="space-y-3">
+               {[1, 2, 3].map(i => <Skeleton key={i} className="h-20 w-full rounded-xl" />)}
+             </div>
+          </div>
+          <div className="w-full lg:w-80 flex flex-col gap-4 shrink-0">
+            <Skeleton className="h-6 w-32" />
+            <Skeleton className="flex-1 rounded-2xl min-h-[300px]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex-1 overflow-hidden flex flex-col gap-8 h-full">

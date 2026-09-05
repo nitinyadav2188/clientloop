@@ -1,12 +1,30 @@
+import { useAuth } from "@/contexts/AuthContext";
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Check, ArrowRight, MessageSquare, Briefcase, Mail, Columns, Brain, Calendar, FileText, PieChart } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { useToast } from '@/components/ui/use-toast';
 
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { loginWithGoogle } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate('/app');
+    } catch (e: any) {
+      console.error(e);
+      toast({
+        title: "Login Interrupted",
+        description: "If the popup was blocked or failed, please try opening the app in a new tab (top right corner).",
+        type: "error"
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F7F7F2] text-[#111111] font-sans selection:bg-[#C8FF2C] selection:text-black">
@@ -29,7 +47,7 @@ export default function LandingPage() {
           
           <div className="flex items-center gap-4">
             <Link to="/app" className="text-sm font-medium hover:text-muted-foreground hidden sm:block">Sign In</Link>
-            <Button onClick={() => navigate('/app')} className="bg-primary text-white hover:bg-primary/90 rounded-full px-6">
+            <Button onClick={() => handleLogin()} className="bg-primary text-white hover:bg-primary/90 rounded-full px-6">
               Get Started
             </Button>
           </div>
@@ -51,7 +69,7 @@ export default function LandingPage() {
             ClientLoop brings your leads, conversations, follow-ups and proposals into one simple workspace.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button size="lg" onClick={() => navigate('/app')} className="rounded-full px-8 h-14 text-base bg-primary text-white hover:bg-primary/90 w-full sm:w-auto">
+            <Button size="lg" onClick={() => handleLogin()} className="rounded-full px-8 h-14 text-base bg-primary text-white hover:bg-primary/90 w-full sm:w-auto">
               Start Free
             </Button>
             <Button size="lg" variant="outline" className="rounded-full px-8 h-14 text-base w-full sm:w-auto bg-white/50 backdrop-blur-sm">
@@ -356,7 +374,7 @@ export default function LandingPage() {
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="text-muted-foreground">Manual reminders</span></li>
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="text-muted-foreground">Basic dashboard</span></li>
               </ul>
-              <Button className="w-full" variant="outline" onClick={() => navigate('/app')}>Start Free</Button>
+              <Button className="w-full" variant="outline" onClick={() => handleLogin()}>Start Free</Button>
             </Card>
             
             <Card className="p-8 border-2 border-primary shadow-xl flex flex-col relative transform md:-translate-y-4">
@@ -372,7 +390,7 @@ export default function LandingPage() {
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="font-medium">Proposal tracking</span></li>
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="font-medium">Revenue analytics</span></li>
               </ul>
-              <Button className="w-full bg-primary text-white" onClick={() => navigate('/app')}>Start Pro</Button>
+              <Button className="w-full bg-primary text-white" onClick={() => handleLogin()}>Start Pro</Button>
             </Card>
             
             <Card className="p-8 border shadow-sm flex flex-col">
@@ -384,7 +402,7 @@ export default function LandingPage() {
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="text-muted-foreground">Client portal</span></li>
                 <li className="flex items-start gap-3"><Check className="w-5 h-5 text-primary shrink-0" /> <span className="text-muted-foreground">Multiple pipelines</span></li>
               </ul>
-              <Button className="w-full" variant="outline" onClick={() => navigate('/app')}>Start Business</Button>
+              <Button className="w-full" variant="outline" onClick={() => handleLogin()}>Start Business</Button>
             </Card>
           </div>
         </div>
@@ -399,7 +417,7 @@ export default function LandingPage() {
         <p className="text-xl font-medium mb-12 max-w-2xl mx-auto">
           Capture the conversation. Follow up at the right time. Close the deal.
         </p>
-        <Button size="lg" className="rounded-full px-12 h-16 text-lg bg-primary text-white hover:bg-primary/90" onClick={() => navigate('/app')}>
+        <Button size="lg" className="rounded-full px-12 h-16 text-lg bg-primary text-white hover:bg-primary/90" onClick={() => handleLogin()}>
           Start Free Now
         </Button>
       </section>

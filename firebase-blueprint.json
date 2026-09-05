@@ -1,0 +1,112 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A freelancer user profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "avatar": { "type": "string" },
+        "plan": { "type": "string", "enum": ["free", "pro", "business"] }
+      },
+      "required": ["id", "email", "name", "plan"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "A client lead",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "company": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "source": { "type": "string", "enum": ["whatsapp", "linkedin", "instagram", "email", "upwork", "referral", "website", "other"] },
+        "project": { "type": "string" },
+        "description": { "type": "string" },
+        "estimated_value": { "type": "number" },
+        "stage": { "type": "string", "enum": ["new", "contacted", "qualified", "proposal", "negotiation", "won", "lost"] },
+        "temperature": { "type": "string", "enum": ["hot", "warm", "cold"] },
+        "last_contact_at": { "type": "string" },
+        "next_follow_up_at": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      },
+      "required": ["id", "userId", "name", "source", "project", "estimated_value", "stage", "temperature", "last_contact_at", "next_follow_up_at", "status", "created_at", "updated_at"]
+    },
+    "Proposal": {
+      "title": "Proposal",
+      "description": "A project proposal",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "client_id": { "type": "string" },
+        "project": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["draft", "sent", "viewed", "accepted", "rejected"] },
+        "sent_date": { "type": "string" },
+        "expiration_date": { "type": "string" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["id", "userId", "client_id", "project", "amount", "status", "created_at"]
+    },
+    "Client": {
+      "title": "Client",
+      "description": "A won client",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "lead_id": { "type": "string" },
+        "name": { "type": "string" },
+        "company": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "total_revenue": { "type": "number" },
+        "created_at": { "type": "string" }
+      },
+      "required": ["id", "userId", "lead_id", "name", "total_revenue", "created_at"]
+    },
+    "FollowUp": {
+      "title": "FollowUp",
+      "description": "A follow-up task",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "lead_id": { "type": "string" },
+        "action": { "type": "string" },
+        "due_date": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "snoozed"] }
+      },
+      "required": ["id", "userId", "lead_id", "action", "due_date", "status"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile document"
+    },
+    "users/{userId}/leads/{leadId}": {
+      "schema": { "$ref": "#/entities/Lead" },
+      "description": "User leads collection"
+    },
+    "users/{userId}/proposals/{proposalId}": {
+      "schema": { "$ref": "#/entities/Proposal" },
+      "description": "User proposals collection"
+    },
+    "users/{userId}/clients/{clientId}": {
+      "schema": { "$ref": "#/entities/Client" },
+      "description": "User clients collection"
+    },
+    "users/{userId}/followups/{followupId}": {
+      "schema": { "$ref": "#/entities/FollowUp" },
+      "description": "User followups collection"
+    }
+  }
+}

@@ -1,38 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { store } from '@/lib/store';
+import { useLeads } from '@/hooks/useLeads';
 import { Lead } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Select } from '@/components/ui/select';
-import { Search, Plus, Filter, MoreHorizontal, MessageSquare } from 'lucide-react';
+import { Search, Plus, Filter, MoreHorizontal, MessageSquare, Users, ArrowRight } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import QuickAddLeadModal from '@/components/QuickAddLeadModal';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Leads() {
-  const [leads, setLeads] = useState<Lead[]>([]);
+  const { leads, loading } = useLeads();
   const [search, setSearch] = useState('');
   const [filterStage, setFilterStage] = useState('all');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const navigate = useNavigate();
-
-  const loadLeads = () => {
-    setLeads(store.getLeads());
-  };
-
-  useEffect(() => {
-    loadLeads();
-    
-    // Check URL params for quick open
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('new') === 'true') {
-      setIsAddModalOpen(true);
-      // clean url
-      window.history.replaceState({}, '', '/app/leads');
-    }
-  }, []);
-
+  
   const filteredLeads = leads.filter(lead => {
     const matchesSearch = lead.name.toLowerCase().includes(search.toLowerCase()) || 
                           lead.project.toLowerCase().includes(search.toLowerCase()) ||
@@ -112,7 +97,21 @@ export default function Leads() {
         </div>
       </div>
 
-      {filteredLeads.length === 0 ? (
+      {loading ? (
+        <div className="bg-white rounded-xl border shadow-sm flex-1 overflow-hidden flex flex-col p-4 space-y-4">
+           {[1, 2, 3, 4, 5].map((i) => (
+             <div key={i} className="flex items-center space-x-4 py-2 border-b last:border-0">
+               <div className="flex-1 space-y-2">
+                 <Skeleton className="h-4 w-[250px]" />
+                 <Skeleton className="h-3 w-[200px]" />
+               </div>
+               <Skeleton className="h-6 w-20 rounded-full" />
+               <Skeleton className="h-4 w-16" />
+               <Skeleton className="h-8 w-8 rounded-md" />
+             </div>
+           ))}
+        </div>
+      ) : filteredLeads.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center bg-white border border-dashed rounded-xl p-8 text-center">
           <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
             <Users className="w-8 h-8 text-muted-foreground" />
@@ -192,13 +191,10 @@ export default function Leads() {
           onClose={() => setIsAddModalOpen(false)} 
           onSaved={() => {
             setIsAddModalOpen(false);
-            loadLeads();
+            
           }} 
         />
       )}
     </div>
   );
 }
-
-// Needed imports for missing icons
-import { Users, ArrowRight } from 'lucide-react';

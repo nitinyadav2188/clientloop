@@ -5,7 +5,7 @@ import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { Select } from './ui/select';
 import { extractLeadFromMessage } from '@/lib/ai';
-import { store } from '@/lib/store';
+import { useLeads } from '@/hooks/useLeads';
 import { useToast } from './ui/use-toast';
 import { X, Sparkles, Loader2 } from 'lucide-react';
 import { Lead } from '@/types';
@@ -17,6 +17,7 @@ interface QuickAddLeadModalProps {
 
 export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModalProps) {
   const { toast } = useToast();
+  const { addLead } = useLeads();
   const [mode, setMode] = useState<'manual' | 'ai'>('manual');
   const [message, setMessage] = useState('');
   const [isExtracting, setIsExtracting] = useState(false);
@@ -47,7 +48,7 @@ export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModa
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!formData.name || !formData.project) {
       toast({ title: 'Required Fields', description: 'Name and Project are required.', type: 'error' });
       return;
@@ -58,7 +59,7 @@ export default function QuickAddLeadModal({ onClose, onSaved }: QuickAddLeadModa
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       
-      store.saveLead({
+      await addLead({
         name: formData.name,
         company: formData.company || '',
         email: formData.email || '',

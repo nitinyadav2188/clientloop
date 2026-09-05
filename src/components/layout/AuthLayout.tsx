@@ -3,18 +3,22 @@ import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Users, Columns, Search, Bell, HelpCircle, Plus, Settings, LogOut, FileText, Briefcase, IndianRupee } from 'lucide-react';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
-import { store } from '@/lib/store';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNotifications } from '@/hooks/useNotifications';
 
 export default function AuthLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const user = store.getUser();
+  const { profile, logout } = useAuth();
+  const { notifications } = useNotifications();
+  const user = profile || { name: '', plan: 'free' };
+  
+  const unreadCount = notifications.filter(n => !n.read).length;
 
   const navItems = [
     { name: 'Dashboard', path: '/app', icon: LayoutDashboard },
     { name: 'Leads', path: '/app/leads', icon: Users },
     { name: 'Pipeline', path: '/app/pipeline', icon: Columns },
-    { name: 'Follow-ups', path: '/app/follow-ups', icon: Bell },
     { name: 'Proposals', path: '/app/proposals', icon: FileText },
     { name: 'Clients', path: '/app/clients', icon: Briefcase },
     { name: 'Revenue', path: '/app/revenue', icon: IndianRupee },
@@ -67,6 +71,26 @@ export default function AuthLayout() {
           <div className="my-4 pt-4">
             <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 px-3">System</div>
             <Link
+              to="/app/notifications"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={cn(
+                "flex items-center justify-between px-3 py-2 rounded-xl text-sm font-bold transition-colors",
+                location.pathname.startsWith('/app/notifications')
+                  ? "bg-primary text-white"
+                  : "text-muted-foreground hover:bg-gray-50"
+              )}
+            >
+              <div className="flex items-center gap-3">
+                <Bell className="w-5 h-5" />
+                Notifications
+              </div>
+              {unreadCount > 0 && (
+                <span className="bg-primary text-primary-foreground text-[10px] w-5 h-5 rounded-full flex items-center justify-center">
+                  {unreadCount}
+                </span>
+              )}
+            </Link>
+            <Link
               to="/app/settings"
               onClick={() => setIsMobileMenuOpen(false)}
               className={cn(
@@ -83,14 +107,19 @@ export default function AuthLayout() {
         </nav>
 
         <div className="mt-auto pt-6 border-t border-border">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-accent-lime border-2 border-primary flex items-center justify-center font-bold">
-              {user.name.charAt(0)}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-accent-lime border-2 border-primary flex items-center justify-center font-bold">
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold truncate">{user.name}</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold truncate">{user.plan} Plan Member</p>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold truncate">{user.name}</p>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold truncate">{user.plan} Plan Member</p>
-            </div>
+            <button onClick={logout} className="p-2 text-muted-foreground hover:text-destructive transition-colors rounded-lg hover:bg-red-50">
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </aside>
@@ -116,9 +145,9 @@ export default function AuthLayout() {
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4 ml-4">
-            <button className="text-muted-foreground hover:text-primary relative">
+            <button onClick={() => navigate('/app/notifications')} className="text-muted-foreground hover:text-primary relative">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-0 right-0 w-2 h-2 bg-accent-lime rounded-full ring-2 ring-white"></span>
+              {unreadCount > 0 && <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-accent-lime rounded-full ring-2 ring-white"></span>}
             </button>
             <Button onClick={() => navigate('/app/leads?new=true')}>
               + Add Lead

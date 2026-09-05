@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // HELPER FUNCTIONS
+    function isSignedIn() { return request.auth != null; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    
+    // User Validator
+    function isValidUser(data) {
+      return data.keys().hasAll(['id', 'email', 'name', 'plan']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.email is string && data.email.size() <= 128 &&
+        data.name is string && data.name.size() <= 128 &&
+        data.plan is string && data.plan.size() <= 128 &&
+        data.get('avatar', '') is string;
+    }
+    
+    // Lead Validator
+    function isValidLead(data) {
+      return data.keys().hasAll(['id', 'userId', 'name', 'source', 'project', 'estimated_value', 'stage', 'temperature', 'last_contact_at', 'next_follow_up_at', 'status', 'created_at', 'updated_at']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId == request.auth.uid &&
+        data.name is string && data.name.size() <= 128 &&
+        data.source is string && data.source.size() <= 64 &&
+        data.project is string && data.project.size() <= 256 &&
+        data.estimated_value is number &&
+        data.stage is string && data.stage.size() <= 64 &&
+        data.temperature is string && data.temperature.size() <= 64 &&
+        data.last_contact_at is string && data.last_contact_at.size() <= 64 &&
+        data.next_follow_up_at is string && data.next_follow_up_at.size() <= 64 &&
+        data.status is string && data.status.size() <= 64 &&
+        data.created_at is string && data.created_at.size() <= 64 &&
+        data.updated_at is string && data.updated_at.size() <= 64 &&
+        data.get('company', '') is string && data.get('company', '').size() <= 128 &&
+        data.get('email', '') is string && data.get('email', '').size() <= 128 &&
+        data.get('phone', '') is string && data.get('phone', '').size() <= 64 &&
+        data.get('description', '') is string && data.get('description', '').size() <= 2048;
+    }
+
+    // Proposal Validator
+    function isValidProposal(data) {
+      return data.keys().hasAll(['id', 'userId', 'client_id', 'project', 'amount', 'status', 'created_at']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId == request.auth.uid &&
+        data.client_id is string && data.client_id.size() <= 128 &&
+        data.project is string && data.project.size() <= 256 &&
+        data.amount is number &&
+        data.status is string && data.status.size() <= 64 &&
+        data.created_at is string && data.created_at.size() <= 64 &&
+        data.get('sent_date', '') is string && data.get('sent_date', '').size() <= 64 &&
+        data.get('expiration_date', '') is string && data.get('expiration_date', '').size() <= 64;
+    }
+
+    // Client Validator
+    function isValidClient(data) {
+      return data.keys().hasAll(['id', 'userId', 'lead_id', 'name', 'total_revenue', 'created_at']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId == request.auth.uid &&
+        data.lead_id is string && data.lead_id.size() <= 128 &&
+        data.name is string && data.name.size() <= 128 &&
+        data.total_revenue is number &&
+        data.created_at is string && data.created_at.size() <= 64 &&
+        data.get('company', '') is string && data.get('company', '').size() <= 128 &&
+        data.get('email', '') is string && data.get('email', '').size() <= 128 &&
+        data.get('phone', '') is string && data.get('phone', '').size() <= 64;
+    }
+
+    // FollowUp Validator
+    function isValidFollowUp(data) {
+      return data.keys().hasAll(['id', 'userId', 'lead_id', 'action', 'due_date', 'status']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId == request.auth.uid &&
+        data.lead_id is string && data.lead_id.size() <= 128 &&
+        data.action is string && data.action.size() <= 256 &&
+        data.due_date is string && data.due_date.size() <= 64 &&
+        data.status is string && data.status.size() <= 64;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow create: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming()) && incoming().id == userId;
+      allow update: if isSignedIn() && request.auth.uid == userId && isValidUser(incoming()) && incoming().id == existing().id && incoming().email == existing().email;
+      
+      match /leads/{leadId} {
+        allow list: if isSignedIn() && request.auth.uid == userId;
+        allow get: if isSignedIn() && request.auth.uid == userId;
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(leadId) && isValidLead(incoming()) && incoming().id == leadId;
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(leadId) && isValidLead(incoming()) && incoming().id == existing().id && incoming().userId == existing().userId && incoming().created_at == existing().created_at;
+        allow delete: if isSignedIn() && request.auth.uid == userId;
+      }
+      
+      match /proposals/{proposalId} {
+        allow list: if isSignedIn() && request.auth.uid == userId;
+        allow get: if isSignedIn() && request.auth.uid == userId;
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(proposalId) && isValidProposal(incoming()) && incoming().id == proposalId;
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(proposalId) && isValidProposal(incoming()) && incoming().id == existing().id && incoming().userId == existing().userId && incoming().created_at == existing().created_at;
+        allow delete: if isSignedIn() && request.auth.uid == userId;
+      }
+      
+      match /clients/{clientId} {
+        allow list: if isSignedIn() && request.auth.uid == userId;
+        allow get: if isSignedIn() && request.auth.uid == userId;
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(clientId) && isValidClient(incoming()) && incoming().id == clientId;
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(clientId) && isValidClient(incoming()) && incoming().id == existing().id && incoming().userId == existing().userId && incoming().created_at == existing().created_at;
+        allow delete: if isSignedIn() && request.auth.uid == userId;
+      }
+      
+      match /followups/{followupId} {
+        allow list: if isSignedIn() && request.auth.uid == userId;
+        allow get: if isSignedIn() && request.auth.uid == userId;
+        allow create: if isSignedIn() && request.auth.uid == userId && isValidId(followupId) && isValidFollowUp(incoming()) && incoming().id == followupId;
+        allow update: if isSignedIn() && request.auth.uid == userId && isValidId(followupId) && isValidFollowUp(incoming()) && incoming().id == existing().id && incoming().userId == existing().userId;
+        allow delete: if isSignedIn() && request.auth.uid == userId;
+      }
+    }
+  }
+}

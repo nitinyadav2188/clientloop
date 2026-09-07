@@ -17,6 +17,10 @@ export default function LandingPage() {
       await loginWithGoogle();
       navigate('/app');
     } catch (e: any) {
+      if (e?.code === 'auth/popup-closed-by-user' || e?.code === 'auth/cancelled-popup-request') {
+        // User intentionally closed the popup, no need to show an error
+        return;
+      }
       console.error(e);
       toast({
         title: "Login Interrupted",

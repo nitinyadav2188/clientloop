@@ -60,8 +60,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    provider.addScope('email');
-    provider.addScope('profile');
     // Allow users to pick account even if they are logged into multiple
     provider.setCustomParameters({ prompt: 'select_account' });
     

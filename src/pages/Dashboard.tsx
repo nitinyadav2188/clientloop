@@ -5,18 +5,34 @@ import { Badge } from '@/components/ui/badge';
 import { useLeads } from '@/hooks/useLeads';
 import { useAuth } from '@/contexts/AuthContext';
 import { Lead } from '@/types';
-import { ArrowRight, CheckCircle2, Clock, Calendar } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock, Calendar, Plus } from 'lucide-react';
 import { format, isToday, isPast, parseISO, differenceInDays } from 'date-fns';
 import { AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { motion } from 'motion/react';
+import QuickAddLeadModal from '@/components/QuickAddLeadModal';
 
 export default function Dashboard() {
   const { leads, loading } = useLeads();
   const { profile } = useAuth();
   const user = profile || { name: ' ', plan: 'free' };
   const navigate = useNavigate();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [quickNotes, setQuickNotes] = useState('');
+
+  useEffect(() => {
+    const savedNotes = localStorage.getItem('clientloop_quick_notes');
+    if (savedNotes) {
+      setQuickNotes(savedNotes);
+    }
+  }, []);
+
+  const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setQuickNotes(e.target.value);
+    localStorage.setItem('clientloop_quick_notes', e.target.value);
+  };
 
   const totalLeads = leads.length;
   const pipelineValue = leads
@@ -148,22 +164,22 @@ export default function Dashboard() {
       )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-card border border-border p-5 rounded-2xl">
+        <motion.div whileHover={{ y: -4, transition: { duration: 0.2 } }} className="bg-card border border-border p-5 rounded-2xl">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Total Leads</p>
           <p className="text-3xl font-black">{totalLeads}</p>
-        </div>
-        <div className="bg-card border border-border p-5 rounded-2xl">
+        </motion.div>
+        <motion.div whileHover={{ y: -4, transition: { duration: 0.2 } }} className="bg-card border border-border p-5 rounded-2xl">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Pipeline Value</p>
           <p className="text-3xl font-black">{formatCurrency(pipelineValue)}</p>
-        </div>
-        <div className="bg-card border border-border p-5 rounded-2xl">
+        </motion.div>
+        <motion.div whileHover={{ y: -4, transition: { duration: 0.2 } }} className="bg-card border border-border p-5 rounded-2xl">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mb-1">Won Revenue</p>
           <p className="text-3xl font-black">{formatCurrency(wonRevenue)}</p>
-        </div>
-        <div className="bg-accent-lime/10 border border-accent-lime p-5 rounded-2xl">
+        </motion.div>
+        <motion.div whileHover={{ y: -4, transition: { duration: 0.2 } }} className="bg-accent-lime/10 border border-accent-lime p-5 rounded-2xl">
           <p className="text-[10px] text-primary uppercase tracking-widest font-black mb-1">Action Required</p>
           <p className="text-3xl font-black text-accent">{todaysFollowUps.length}</p>
-        </div>
+        </motion.div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 overflow-hidden flex-1 min-h-0">
@@ -179,7 +195,7 @@ export default function Dashboard() {
           ) : (
             <>
               {todaysFollowUps.map((lead, index) => (
-                <div key={lead.id} className={cn("bg-card border border-border p-4 rounded-xl flex items-center gap-4", index === 0 ? "border-l-4 border-l-accent-lime" : "")}>
+                <motion.div key={lead.id} whileHover={{ x: 4, transition: { duration: 0.2 } }} className={cn("bg-card border border-border p-4 rounded-xl flex items-center gap-4 cursor-pointer", index === 0 ? "border-l-4 border-l-accent-lime" : "")} onClick={() => navigate(`/app/leads/${lead.id}`)}>
                   <div className="w-12 h-12 bg-background rounded-full flex items-center justify-center shrink-0 font-bold border border-border">
                     {lead.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
                   </div>
@@ -195,21 +211,34 @@ export default function Dashboard() {
                     </div>
                     <p className="text-xs text-muted-foreground truncate">{lead.project} • <span className="text-primary font-semibold">{formatCurrency(lead.estimated_value)}</span></p>
                   </div>
-                  <Button variant="outline" size="icon" onClick={() => navigate(`/app/leads/${lead.id}`)} className="shrink-0 rounded-lg">
+                  <Button variant="outline" size="icon" onClick={(e) => { e.stopPropagation(); navigate(`/app/leads/${lead.id}`); }} className="shrink-0 rounded-lg">
                     <ArrowRight className="w-5 h-5" />
                   </Button>
-                </div>
+                </motion.div>
               ))}
             </>
           )}
           </div>
         </div>
 
-        <div className="w-full lg:w-80 flex flex-col gap-4 overflow-hidden shrink-0 pb-6">
-          <h3 className="text-lg font-black tracking-tight uppercase">Recent Activity</h3>
-          <div className="flex-1 bg-card border border-border rounded-2xl p-5 overflow-y-auto space-y-4">
+        <div className="w-full lg:w-80 flex flex-col gap-6 overflow-hidden shrink-0 pb-6">
+          <div className="flex flex-col gap-3 shrink-0">
+            <h3 className="text-lg font-black tracking-tight uppercase">Quick Notes</h3>
+            <div className="bg-[#C8FF2C]/10 border border-[#C8FF2C]/30 rounded-2xl p-1 shadow-sm relative group focus-within:border-[#C8FF2C] transition-colors">
+              <textarea
+                value={quickNotes}
+                onChange={handleNotesChange}
+                placeholder="Jot down quick thoughts, reminders, or numbers..."
+                className="w-full h-32 bg-transparent resize-none outline-none text-sm p-3 placeholder:text-muted-foreground/60 text-foreground"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 flex-1 overflow-hidden">
+            <h3 className="text-lg font-black tracking-tight uppercase">Recent Activity</h3>
+            <div className="flex-1 bg-card border border-border rounded-2xl p-5 overflow-y-auto space-y-4">
             {[...leads].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 5).map(lead => (
-              <div key={lead.id} className="space-y-2 pb-4 border-b border-border last:border-0 last:pb-0">
+              <motion.div key={lead.id} whileHover={{ x: 2, transition: { duration: 0.2 } }} className="space-y-2 pb-4 border-b border-border last:border-0 last:pb-0">
                 <div className="flex justify-between items-center px-1">
                   <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest truncate max-w-[150px]">{lead.name}</span>
                   <span className="text-[10px] font-bold shrink-0">{format(parseISO(lead.created_at), 'MMM d')}</span>
@@ -218,11 +247,27 @@ export default function Dashboard() {
                   <p className="text-xs font-bold truncate">{lead.project}</p>
                   <p className="text-[10px] text-muted-foreground truncate">Added as new lead</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
+        </div>
       </div>
+
+      <Button
+        size="icon"
+        className="fixed bottom-8 right-8 w-14 h-14 rounded-full shadow-2xl bg-gradient-to-r from-[#3F46FF] to-[#FF3366] text-white hover:scale-105 hover:shadow-[#FF3366]/30 transition-all duration-200 z-50 border-none"
+        onClick={() => setIsAddModalOpen(true)}
+      >
+        <Plus className="w-6 h-6" />
+      </Button>
+
+      {isAddModalOpen && (
+        <QuickAddLeadModal 
+          onClose={() => setIsAddModalOpen(false)} 
+          onSaved={() => setIsAddModalOpen(false)} 
+        />
+      )}
     </div>
   );
 }
